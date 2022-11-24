@@ -8,15 +8,17 @@ from rest_framework.response import Response
 # JsonResponse, HttpResponse - difference JsonResponse expects dictionary as argument, Http expects string
 
 from products.models import Product
+from products.serializers import ProductSerializer
 
 
 @api_view(["GET"]) # decorator([which metod is allowed]), code bellow Django REST framewoork API view 
 def api_home(request, *args, **kwargs):
-    model_data = Product.objects.all().order_by("?").first() # to get a random object order_by(?)
+    instance = Product.objects.all().order_by("?").first() # to get a random object order_by(?)
     data = {}
-    if model_data:
-        #data = model_to_dict(model_data) - all fields
-        data = model_to_dict(model_data, fields=["id","title","price"]) # declared id title and price to be shown
+    if instance:
+        #data = model_to_dict(instance) - all fields
+        data = ProductSerializer(instance).data
+        #data = model_to_dict(instance, fields=["id","title","price","sale_price"]) # declared id title and price to be shown
     return Response(data)
     #     print(data)
     #     data = dict(data)
