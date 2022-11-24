@@ -11,16 +11,13 @@ from products.models import Product
 from products.serializers import ProductSerializer
 
 
-@api_view(["GET"]) # decorator([which metod is allowed]), code bellow Django REST framewoork API view 
+@api_view(["POST"]) # decorator([which metod is allowed]), code bellow Django REST framewoork API view 
 def api_home(request, *args, **kwargs):
-    instance = Product.objects.all().order_by("?").first() # to get a random object order_by(?)
-    data = {}
-    if instance:
-        #data = model_to_dict(instance) - all fields
-        data = ProductSerializer(instance).data
-        #data = model_to_dict(instance, fields=["id","title","price","sale_price"]) # declared id title and price to be shown
-    return Response(data)
-    #     print(data)
-    #     data = dict(data)
-    #     json_data_str = json.dumps(data)
-    # return HttpResponse(json_data_str, headers = {"content-type":"aplication/json"})
+
+    data = request.data
+    serializer = ProductSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        # instance = serializer.save()
+        print(serializer.data)
+        return Response(serializer.data)
+    return Response({"invalid": "not good data"}, status = 400)
