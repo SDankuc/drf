@@ -29,6 +29,25 @@ class ProductDetailApiView(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
     #lookup_field = "pk"
 
+class ProductUpdateApiView(generics.UpdateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = "pk"    
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        if not instance.content:
+            instance.content = instance.title
+
+class ProductDeleteApiView(generics.DestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = "pk"    
+
+    def perfom_destroy(self, instance):
+        super().perfom_destroy(instance)
+
+
 #not using this method -> ProductCreateApiView changing to ProductListCreateApiView
 class ProductListApiView(generics.ListAPIView):
 
