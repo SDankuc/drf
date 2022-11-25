@@ -108,3 +108,7 @@ def product_alt_view(request,pk = None,*args, **kwargs):
             serializer.save(content=content)
         return Response(serializer.data)
     return Response({"Invalid":"not good data"}, status=400)
+
+
+
+#https://stefankida.com/blog
