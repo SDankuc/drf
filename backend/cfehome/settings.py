@@ -142,7 +142,7 @@ REST_FRAMEWORK = {
     ],
 
     "DEFAULT_PERMISSION_CLASSES":[
-        "rest_framework.authentication.IsAuthenticatedOrReadOnly" # Allows only GET to everyone
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly" # Allows only GET to everyone
     ]
 }
     
