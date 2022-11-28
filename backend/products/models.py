@@ -37,7 +37,7 @@ class Product(models.Model):
 
     objects = ProductManager()
 
-    def is_public(self):
+    def is_public(self) -> bool:
         return self.public # True or False
 
     def get_tags_list(self):
