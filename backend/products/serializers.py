@@ -11,9 +11,9 @@ class ProductInlineSerializer(serializers.Serializer):
 class ProductSerializer(serializers.ModelSerializer):
     #user = UserPublicSerializer(read_only = True)
     owner = UserPublicSerializer(source = "user",read_only = True)
-    related_products = ProductInlineSerializer(source = "user.product_set.all", read_only = True, many=True)
-    my_user_data = serializers.SerializerMethodField(read_only=True)
-    my_discount = serializers.SerializerMethodField(read_only = True)
+    #related_products = ProductInlineSerializer(source = "user.product_set.all", read_only = True, many=True)
+    #my_user_data = serializers.SerializerMethodField(read_only=True)
+    #my_discount = serializers.SerializerMethodField(read_only = True)
     edit_url = serializers.SerializerMethodField(read_only = True)
     url = serializers.HyperlinkedIdentityField(
         view_name="product-detail",
@@ -38,9 +38,9 @@ class ProductSerializer(serializers.ModelSerializer):
             "content",
             "price",
             "sale_price",
-            "my_discount",
-            "my_user_data",
-            "related_products",
+            #"my_discount",
+            #"my_user_data",
+            #"related_products",
         ]
     def get_my_user_data(self,obj):
         return{
