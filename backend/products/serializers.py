@@ -14,34 +14,29 @@ class ProductSerializer(serializers.ModelSerializer):
     #related_products = ProductInlineSerializer(source = "user.product_set.all", read_only = True, many=True)
     #my_user_data = serializers.SerializerMethodField(read_only=True)
     #my_discount = serializers.SerializerMethodField(read_only = True)
-    edit_url = serializers.SerializerMethodField(read_only = True)
-    url = serializers.HyperlinkedIdentityField(
-        view_name="product-detail",
-        lookup_field = "pk"
-        )
     title = serializers.CharField(validators = [validate_title_no_hello, unique_product_title])
 
     #name = serializers.CharField(source = "title", read_only = True) # source to grab the title and display it as name
     email = serializers.EmailField(source = "user.email", read_only = True)
     #email = serializers.EmailField(write_only=True)
+    body = serializers.CharField(source="content")
     class Meta:
         model = Product
         fields = [
             "owner", # user_id by default
             "email",
-            "url",
-            "edit_url",
-            #"email",
             "pk",
             "title",
             #"name",
-            "content",
+            "body",
             "price",
             "sale_price",
             #"my_discount",
             #"my_user_data",
             #"related_products",
             "public",
+            'path',
+            'endpoint',
         ]
     def get_my_user_data(self,obj):
         return{
